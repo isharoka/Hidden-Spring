@@ -9,7 +9,7 @@ import path from "path";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [
     tsconfigPaths({ projects: ["./tsconfig.json"] }),
     tailwindcss(),
@@ -24,7 +24,7 @@ export default defineConfig({
       server: { entry: "server" },
     }),
     react(),
-    nitro({ preset: "vercel" }),
+    nitro({ preset: command === "build" ? "vercel" : undefined }),
   ],
   css: {
     transformer: "lightningcss",
@@ -56,4 +56,4 @@ export default defineConfig({
     host: "::",
     port: 8080,
   },
-});
+}));
